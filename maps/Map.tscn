@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdv1dtt4gv4yd"]
+
+[ext_resource type="Texture2D" uid="uid://yg8fe68ljyj8" path="res://assets/map.jpg" id="2"]
+[ext_resource type="PackedScene" uid="uid://btrakwsauvf53" path="res://Camera.tscn" id="2_f0e4t"]
+[ext_resource type="Script" path="res://ExitButton.cs" id="3_uj3g0"]
+
+[node name="Map1" type="Node2D"]
+position = Vector2(-3, -38)
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(2563, 1958)
+texture = ExtResource("2")
+
+[node name="Camera" parent="." instance=ExtResource("2_f0e4t")]
+position = Vector2(2783, 1344)
+position_smoothing_enabled = true
+position_smoothing_speed = 22.0
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="ExitButton" type="Button" parent="."]
+offset_left = 4436.0
+offset_top = 2524.0
+offset_right = 4458.0
+offset_bottom = 2555.0
+scale = Vector2(3.20869, 3.23914)
+flat = true
+script = ExtResource("3_uj3g0")

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://btrakwsauvf53"]
+
+[ext_resource type="Script" path="res://Camera.cs" id="1"]
+
+[node name="Camera" type="Camera2D"]
+position = Vector2(1219, 557)
+script = ExtResource("1")

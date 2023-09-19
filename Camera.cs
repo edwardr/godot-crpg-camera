@@ -10,35 +10,35 @@ using Godot;
 public partial class Camera : Camera2D
 {
 
-	public float MinZoom = 0.75f;
-	public float MaxZoom = 1.25f;
-	public float ZoomIncrement = 0.1f;
-	public float TargetZoom = 1.0f;
-	public float EdgeScrollMargin = 50.0f;
-	public float BaseEdgeScrollSpeed = 400.0f;
-	public Vector2 ViewportSize;
-	public bool ProcessZoomEvent = false;
-	public bool ProcessEdgeScroll = false;
-	public string EdgeScrollEvent;
-	public Resource CursorPoint = ResourceLoader.Load("res://assets/cursor-point.png");
-	public Resource CursorGrab = ResourceLoader.Load("res://assets/cursor-grab.png");
+    public float MinZoom = 0.75f;
+    public float MaxZoom = 1.25f;
+    public float ZoomIncrement = 0.1f;
+    public float TargetZoom = 1.0f;
+    public float EdgeScrollMargin = 50.0f;
+    public float BaseEdgeScrollSpeed = 400.0f;
+    public Vector2 ViewportSize;
+    public bool ProcessZoomEvent = false;
+    public bool ProcessEdgeScroll = false;
+    public string EdgeScrollEvent;
+    public Resource CursorPoint = ResourceLoader.Load("res://assets/cursor-point.png");
+    public Resource CursorGrab = ResourceLoader.Load("res://assets/cursor-grab.png");
 
-	public override void _Ready()
-	{
-		this.SetViewportSize();
-		this.SetMapBoundary();
+    public override void _Ready()
+    {
+        this.SetViewportSize();
+        this.SetMapBoundary();
 
         // Set up the resize signal in case viewport size changes.
         GetViewport().Connect(Viewport.SignalName.SizeChanged, Callable.From(TriggerResizeViewport));
     }
 
-	public void SetViewportSize()
-	{
-		this.ViewportSize = GetViewport().GetVisibleRect().Size;
-	}
+    public void SetViewportSize()
+    {
+        this.ViewportSize = GetViewport().GetVisibleRect().Size;
+    }
 
     public void SetMapBoundary()
-	{
+    {
         // Assumes the background top-left starts at 0,0
         var BackgroundLayer = GetParent().GetNode<Sprite2D>("Background");
         var BackgroundRect = BackgroundLayer.Texture.GetSize();
@@ -48,24 +48,24 @@ public partial class Camera : Camera2D
         this.LimitTop = 0;
     }
 
-	public void TriggerResizeViewport()
-	{
-		this.SetViewportSize();
+    public void TriggerResizeViewport()
+    {
+        this.SetViewportSize();
     }
 
     public override void _PhysicsProcess(double delta)
-	{
-		if (this.ProcessZoomEvent)
-		{
+    {
+        if (this.ProcessZoomEvent)
+        {
             this.Zoom = new Vector2(TargetZoom, TargetZoom);
-			this.ProcessZoomEvent = false;
+            this.ProcessZoomEvent = false;
         }
 
-		if (this.ProcessEdgeScroll)
-		{
+        if (this.ProcessEdgeScroll)
+        {
             var EdgeScrollZoomModifier = this.Zoom.Y * 1.5f;
             switch (this.EdgeScrollEvent)
-			{
+            {
                 case "scroll_top_left":
                     this.SetScreenPosition(
                         this.GetClampedScreenValueX((this.Position.X - ((float)delta * BaseEdgeScrollSpeed) * EdgeScrollZoomModifier)),
@@ -116,63 +116,66 @@ public partial class Camera : Camera2D
                     break;
             }
         }
-	}
+    }
 
-	public override void _UnhandledInput(InputEvent @event)
-	{
-		if (@event is InputEventMouseButton eventMouseButton)
-		{
-			if (@event.IsPressed())
-			{
-				switch(eventMouseButton.ButtonIndex)
-				{
-					case MouseButton.WheelDown:
-						ZoomIn();
-						break;
-					case MouseButton.WheelUp:
-						ZoomOut();
-						break;
-					case MouseButton.Middle:
-						Input.SetCustomMouseCursor(CursorGrab);
-						break;
-				}
-			} else
-			{
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton eventMouseButton)
+        {
+            if (@event.IsPressed())
+            {
+                switch (eventMouseButton.ButtonIndex)
+                {
+                    case MouseButton.WheelDown:
+                        ZoomIn();
+                        break;
+                    case MouseButton.WheelUp:
+                        ZoomOut();
+                        break;
+                    case MouseButton.Middle:
+                        Input.SetCustomMouseCursor(CursorGrab);
+                        break;
+                }
+            }
+            else
+            {
                 if (eventMouseButton.ButtonIndex == MouseButton.Middle)
                 {
                     Input.SetCustomMouseCursor(CursorPoint);
                 }
             }
-		}
+        }
 
-		if (@event is InputEventMouseMotion eventMouseMotion)
-		{
+        if (@event is InputEventMouseMotion eventMouseMotion)
+        {
             var MousePosition = GetViewport().GetMousePosition();
-			this.DetectEdgeScroll(MousePosition.X, MousePosition.Y);
+            this.DetectEdgeScroll(MousePosition.X, MousePosition.Y);
 
-			if (eventMouseMotion.ButtonMask == MouseButtonMask.Middle)
-			{
+            if (eventMouseMotion.ButtonMask == MouseButtonMask.Middle)
+            {
                 var PositionX = this.GetClampedScreenValueX(this.Position.X - eventMouseMotion.Relative[0]);
                 var PositionY = this.GetClampedScreenValueY(this.Position.Y - eventMouseMotion.Relative[1]);
 
                 this.SetScreenPosition(PositionX, PositionY);
             }
-		}
-	}
+        }
+    }
 
     public void DetectEdgeScroll(float x, float y)
-	{
+    {
         if (x <= EdgeScrollMargin)
         {
             if (y <= EdgeScrollMargin)
             {
                 this.ProcessEdgeScroll = true;
                 this.EdgeScrollEvent = "scroll_top_left";
-            } else if (y >= this.ViewportSize.Y - EdgeScrollMargin)
+            }
+            else if (y >= this.ViewportSize.Y - EdgeScrollMargin)
             {
                 this.ProcessEdgeScroll = true;
                 this.EdgeScrollEvent = "scroll_bottom_left";
-            } else
+            }
+            else
             {
                 this.ProcessEdgeScroll = true;
                 this.EdgeScrollEvent = "scroll_left";
@@ -195,15 +198,18 @@ public partial class Camera : Camera2D
                 this.ProcessEdgeScroll = true;
                 this.EdgeScrollEvent = "scroll_right";
             }
-        } else if (y < (EdgeScrollMargin))
+        }
+        else if (y < (EdgeScrollMargin))
         {
             this.ProcessEdgeScroll = true;
             this.EdgeScrollEvent = "scroll_top";
-        } else if (y >= (this.ViewportSize.Y - EdgeScrollMargin))
+        }
+        else if (y >= (this.ViewportSize.Y - EdgeScrollMargin))
         {
             this.ProcessEdgeScroll = true;
             this.EdgeScrollEvent = "scroll_bottom";
-        } else
+        }
+        else
         {
             this.ProcessEdgeScroll = false;
             this.EdgeScrollEvent = "";
@@ -218,12 +224,12 @@ public partial class Camera : Camera2D
     public float GetClampedScreenValueX(float xPos)
     {
         /**
-        * Work around a longtime bug with Camera2D 
-        * that makes it ignore your edge limits
-        * which causes the camera to get stuck on edges.
-        * 
-        * @see https://github.com/godotengine/godot/issues/62441
-        */
+		* Work around a longtime bug with Camera2D 
+		* that makes it ignore your edge limits
+		* which causes the camera to get stuck on edges.
+		* 
+		* @see https://github.com/godotengine/godot/issues/62441
+		*/
 
         return Mathf.Clamp(
              xPos,
@@ -235,12 +241,12 @@ public partial class Camera : Camera2D
     public float GetClampedScreenValueY(float yPos)
     {
         /**
-        * Work around a longtime bug with Camera2D 
-        * that makes it ignore your edge limits
-        * which causes the camera to get stuck on edges.
-        * 
-        * @see https://github.com/godotengine/godot/issues/62441
-        */
+		* Work around a longtime bug with Camera2D 
+		* that makes it ignore your edge limits
+		* which causes the camera to get stuck on edges.
+		* 
+		* @see https://github.com/godotengine/godot/issues/62441
+		*/
 
         return Mathf.Clamp(
             yPos,
@@ -248,15 +254,16 @@ public partial class Camera : Camera2D
             (LimitBottom - (int)(this.ViewportSize[1] / 2 / this.Zoom.X))
         );
     }
+
     public void ZoomIn()
-	{
-		TargetZoom = Mathf.Max(TargetZoom - ZoomIncrement, MinZoom);
+    {
+        TargetZoom = Mathf.Max(TargetZoom - ZoomIncrement, MinZoom);
         this.ProcessZoomEvent = true;
     }
 
-	public void ZoomOut()
-	{
-		TargetZoom = Mathf.Min(TargetZoom + ZoomIncrement, MaxZoom);
+    public void ZoomOut()
+    {
+        TargetZoom = Mathf.Min(TargetZoom + ZoomIncrement, MaxZoom);
         this.ProcessZoomEvent = true;
     }
 }

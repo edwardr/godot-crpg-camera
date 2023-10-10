@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bdv1dtt4gv4yd"]
 
-[ext_resource type="Texture2D" uid="uid://yg8fe68ljyj8" path="res://assets/map.jpg" id="2"]
+[ext_resource type="Texture2D" uid="uid://dfpbfgh2kpwuw" path="res://assets/map.png" id="1_xo8kg"]
 [ext_resource type="PackedScene" uid="uid://btrakwsauvf53" path="res://Camera.tscn" id="2_f0e4t"]
 [ext_resource type="Script" path="res://ExitButton.cs" id="3_uj3g0"]
 
@@ -8,21 +8,21 @@
 position = Vector2(-3, -38)
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(2563, 1958)
-texture = ExtResource("2")
+position = Vector2(3075, 1062)
+texture = ExtResource("1_xo8kg")
 
 [node name="Camera" parent="." instance=ExtResource("2_f0e4t")]
-position = Vector2(2783, 1344)
+position = Vector2(1335, 695)
 position_smoothing_enabled = true
 position_smoothing_speed = 22.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="ExitButton" type="Button" parent="."]
-offset_left = 4436.0
-offset_top = 2524.0
-offset_right = 4458.0
-offset_bottom = 2555.0
-scale = Vector2(3.20869, 3.23914)
+offset_left = 5818.0
+offset_top = 1502.0
+offset_right = 5840.0
+offset_bottom = 1533.0
+scale = Vector2(14.9288, 8.83646)
 flat = true
 script = ExtResource("3_uj3g0")

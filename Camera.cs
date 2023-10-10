@@ -1,10 +1,5 @@
 
 using System;
-//using System.Data;
-//using System.Diagnostics.Metrics;
-//using System.Numerics;
-//using System.Reflection.Metadata;
-//using System.Threading;
 using Godot;
 
 public partial class Camera : Camera2D
@@ -13,9 +8,9 @@ public partial class Camera : Camera2D
     public float MinZoom = 0.75f;
     public float MaxZoom = 1.25f;
     public float ZoomIncrement = 0.1f;
-    public float TargetZoom = 1.0f;
+    public float TargetZoom = 0.75f;
     public float EdgeScrollMargin = 50.0f;
-    public float BaseEdgeScrollSpeed = 400.0f;
+    public float BaseEdgeScrollSpeed = 600.0f;
     public Vector2 ViewportSize;
     public bool ProcessZoomEvent = false;
     public bool ProcessEdgeScroll = false;

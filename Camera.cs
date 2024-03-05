@@ -5,7 +5,7 @@ using Godot;
 public partial class Camera : Camera2D
 {
 
-    public float MinZoom = 0.55f;
+    public float MinZoom = 0.45f;
     public float MaxZoom = 1.25f;
     public float ZoomIncrement = 0.05f;
     public float TargetZoom = 0.5f;

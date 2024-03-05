@@ -5,12 +5,13 @@ using Godot;
 public partial class Camera : Camera2D
 {
 
-    public float MinZoom = 0.75f;
-    public float MaxZoom = 1.25f;
-    public float ZoomIncrement = 0.1f;
-    public float TargetZoom = 0.75f;
+    public float MinZoom = 0.55f;
+    public float MaxZoom = 0.90f;
+    public float ZoomIncrement = 0.05f;
+    public float TargetZoom = 0.65f;
     public float EdgeScrollMargin = 50.0f;
-    public float BaseEdgeScrollSpeed = 600.0f;
+    public float BaseEdgeScrollSpeed = 1000.0f;
+    public float MotionMouseScrollModifier = 1.25f;
     public Vector2 ViewportSize;
     public bool ProcessZoomEvent = false;
     public bool ProcessEdgeScroll = false;
@@ -148,8 +149,8 @@ public partial class Camera : Camera2D
 
             if (eventMouseMotion.ButtonMask == MouseButtonMask.Middle)
             {
-                var PositionX = this.GetClampedScreenValueX(this.Position.X - eventMouseMotion.Relative[0]);
-                var PositionY = this.GetClampedScreenValueY(this.Position.Y - eventMouseMotion.Relative[1]);
+                var PositionX = this.GetClampedScreenValueX(this.Position.X - (eventMouseMotion.Relative[0] * this.MotionMouseScrollModifier));
+                var PositionY = this.GetClampedScreenValueY(this.Position.Y - (eventMouseMotion.Relative[1] * this.MotionMouseScrollModifier));
 
                 this.SetScreenPosition(PositionX, PositionY);
             }

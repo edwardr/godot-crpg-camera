@@ -6,9 +6,9 @@ public partial class Camera : Camera2D
 {
 
     public float MinZoom = 0.55f;
-    public float MaxZoom = 0.90f;
+    public float MaxZoom = 1.25f;
     public float ZoomIncrement = 0.05f;
-    public float TargetZoom = 0.65f;
+    public float TargetZoom = 0.5f;
     public float EdgeScrollMargin = 50.0f;
     public float BaseEdgeScrollSpeed = 1000.0f;
     public float MotionMouseScrollModifier = 1.25f;

@@ -6,9 +6,9 @@ It allows for a variety of movement options over a large 2D background, includin
 
 It is built for Godot C# 4.1+, although you could easily adapt it for 3.5 Mono if you update the references to the `MouseButton` enum in the Camera.cs `_UnhandledInput` method. [These references were renamed and overhauled in v4.0.](https://docs.godotengine.org/en/3.5/classes/class_%40globalscope.html#enum-globalscope-buttonlist)
 
-~~The background image belongs to Bioware, so that cannot be used, but feel free to use this otherwise in any project.~~ Sample background image has been updated. 
+Area map background is courtesy of [user Aranthor of the Gibberlings3](https://www.gibberlings3.net/forums/topic/23598-old-and-forgotten-iwd-mod-art-give-away/). 
 
-There is also a sample demo build in the /builds directory, if you just want to test the camera functionality. Hit ESC or click on the staircase in the lower-right corner of the map to exit the "game."
+If you just want to test the camera functionality, download a build under Releases. Hit ESC or click on the rug at the South end of the map to exit the game.
 
 https://github.com/edwardr/godot-csharp-crpg-camera/assets/2935628/68d24460-66da-4616-8ed7-681b0ad9e68b
 
